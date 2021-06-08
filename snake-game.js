@@ -107,8 +107,7 @@ function drawApple () {
     canvasContext.beginPath();
     canvasContext.arc(appleX+10, appleY+10, 9.75, 0, Math.PI*2,true);
     canvasContext.fill();
-  };
-  if (appleIsEaten==true) {
+  } else {
     generateNewApple();
     canvasContext.fillStyle='green';
     canvasContext.beginPath();

@@ -42,10 +42,9 @@ body {
 
 #scoreboard {
   color: rgb(150, 150, 150);
-  position: absolute;
-    top: 480px;
-    left: 550;
-    margin:auto;
+  text-align: center;
+  margin-top: 350px;
+  margin-right: 200px;
 }
 
 #game-over-popup {
