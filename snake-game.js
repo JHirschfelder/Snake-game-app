@@ -8,8 +8,6 @@ let appleY;
 let appleIsEaten = false
 let velocityX=20;
 let velocityY=0;
-let pausedvelocityX=0;
-let pausedvelocityY=0;
 let hasCollided=false;
 let gameStart = "off";
 let gameTic;
@@ -26,12 +24,9 @@ window.onload = function() {
   };
 };
 
+
 function startButton() {
-  switch(gameStart) {
-    case "off": gameStart="on"; runGame(); break;
-    case "on": gameStart="pause"; pauseGame(); break;
-    case "pause": gameStart="on"; unpauseGame(); break;
-  };
+  if (gameStart=="off") {gameStart="on"; runGame();}
   console.log(gameStart);
 };
 
@@ -43,27 +38,7 @@ function runGame() {
     checkCollision();
     drawApple();
     drawSnake();
-  },250);
-}
-
-function pauseGame() {
-  pausedvelocityX=velocityX;
-  pausedvelocityY=velocityY;
-  velocityX=0;
-  velocityY=0;
-  drawCanvas();
-  drawApple();
-  drawSnake();
-}
-
-function unpauseGame() {
-  velocityX=pausedvelocityX;
-  velocityY=pausedvelocityY;
-  pausedvelocityX=0;
-  pausedvelocityY=0;
-  drawCanvas();
-  drawApple();
-  drawSnake();
+  },1000);
 }
 
 function drawCanvas() {
@@ -120,25 +95,28 @@ function drawApple () {
 };
 
 function generateNewApple() {
-  let gameGrid = [];
   let openSpaces = [];
- 
+  let currentSnakePositions = []
+
   for (let xCoordinate=0; xCoordinate < canvas.width; xCoordinate++) {
     for (let yCoordinate=0; yCoordinate < canvas.height; yCoordinate++) {
       if (xCoordinate % 20==0 && yCoordinate % 20==0) {
-        gameGrid.push({x:xCoordinate, y:yCoordinate});
+        openSpaces.push({x:xCoordinate, y:yCoordinate});
       };
     };
   };
 
-  for (let gameCoordinate=0; gameCoordinate < gameGrid.length; gameCoordinate++) {
+  for (let gameCoordinate=0; gameCoordinate < openSpaces.length; gameCoordinate++) {
     for (let snakeCoordinate=0; snakeCoordinate < snake.length; snakeCoordinate++) {
-      if (gameGrid[gameCoordinate].x!=snake[snakeCoordinate].x && 
-        gameGrid[gameCoordinate].y!=snake[snakeCoordinate].y) {
-          openSpaces.push({x:gameGrid[gameCoordinate].x, 
-            y:gameGrid[gameCoordinate].y});
+      if (openSpaces[gameCoordinate].x==snake[snakeCoordinate].x && 
+        openSpaces[gameCoordinate].y==snake[snakeCoordinate].y) {
+          currentSnakePositions.push(gameCoordinate);
       };
     };
+  };
+
+  for (var i = currentSnakePositions.length -1; i >= 0; i--) {
+    openSpaces.splice(currentSnakePositions[i], 1);
   };
 
   randomCoordinate=Math.floor(Math.random()*openSpaces.length);
