@@ -48,6 +48,19 @@ function drawCanvas() {
 };
 
 function moveSnake() {
+  switch (travelDirection) {
+    case "left":
+      velocityX = -20; velocityY = 0; break;
+      
+    case "up":
+      velocityX = 0; velocityY = -20; break;
+      
+    case "right":
+      velocityX = 20; velocityY = 0; break;
+      
+    case "down":
+      velocityX = 0; velocityY = 20; break;
+  };
   const head = {x: snake[0].x + velocityX, y: snake[0].y + velocityY};
   snake.unshift(head);
   checkApple();
@@ -178,19 +191,16 @@ function changeDirection(event)
   const pressKey = event.keyCode;
 
   switch (true) {
-    case (pressKey == leftArrow && velocityX!=20):
-      velocityX = -20; velocityY = 0; travelDirection="left"; break;
+    case (pressKey == leftArrow && velocityX!=20): travelDirection="left"; break;
+    
+    case (pressKey == upArrow && velocityY!=20): travelDirection="up"; break;
       
-    case (pressKey == upArrow && velocityY!=20):
-      velocityX = 0; velocityY = -20; travelDirection="up"; break;
+    case (pressKey == rightArrow && velocityX!=-20): travelDirection="right"; break;
       
-    case (pressKey == rightArrow && velocityX!=-20):
-      velocityX = 20; velocityY = 0; travelDirection="right"; break;
-      
-    case (pressKey == downArrow && velocityY!=-20):
-      velocityX = 0; velocityY = 20; travelDirection="down"; break;
+    case (pressKey == downArrow && velocityY!=-20): travelDirection="down"; break;
   }
 }
+
 
 const gameOver = new gameOverAlert();
 
