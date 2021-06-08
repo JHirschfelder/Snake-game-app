@@ -1,15 +1,25 @@
+body {
+  background-color: gray;
+}
 
-#game-over-popup{
+#game-canvas {
+  position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    margin:auto;
+}
+
+#game-over-popup {
   width: 500px;
   overflow: hidden;
-  background: pink;
+  background: rgba(4, 0, 255, 0.61);
   box-shadow: 0 0 10px black;
   border-radius: 10px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 9999;
   padding: 10px;
   text-align: center;
   display: none;

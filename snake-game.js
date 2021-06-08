@@ -8,6 +8,7 @@ let appleY;
 let appleIsEaten = false
 let velocityX=20;
 let velocityY=0;
+let travelDirection="right";
 let hasCollided=false;
 let gameStart = "off";
 let gameTic;
@@ -84,12 +85,16 @@ function checkApple() {
 function drawApple () {
   if (appleIsEaten==false) {
     canvasContext.fillStyle='green';
-    canvasContext.fillRect(appleX,appleY,20,20);
+    canvasContext.beginPath();
+    canvasContext.arc(appleX+10, appleY+10, 9.75, 0, Math.PI*2,true);
+    canvasContext.fill();
   };
   if (appleIsEaten==true) {
     generateNewApple();
     canvasContext.fillStyle='green';
-    canvasContext.fillRect(appleX,appleY,20,20);
+    canvasContext.beginPath();
+    canvasContext.arc(appleX+10, appleY+10, 9.75, 0, Math.PI*2,true);
+    canvasContext.fill();
     appleIsEaten=false
   }
 };
@@ -124,14 +129,44 @@ function generateNewApple() {
   appleY=openSpaces[randomCoordinate].y;
 };
 
-function drawSnake() {  
-  snake.forEach(drawSnakeSection);
-};
 
-function drawSnakeSection(snakesection) {
-  canvasContext.fillStyle='red';
-  canvasContext.fillRect(
-    snakesection.x,snakesection.y,20,20);
+function drawSnake() { 
+  let counter=0 
+  snake.forEach(function(snakesection) {
+    const ninetyDegrees=Math.PI/2
+    canvasContext.fillStyle='red';
+    if (counter==0) {
+      switch(travelDirection) {
+        case "left":
+          canvasContext.beginPath();
+          canvasContext.arc(snakesection.x+9.75, snakesection.y+10, 9.75, -ninetyDegrees, Math.PI-ninetyDegrees, true);
+          canvasContext.fill();
+          canvasContext.fillRect(snakesection.x+8.75, snakesection.y+.25, 10.75,19.5)
+          break;
+        case "right":
+          canvasContext.beginPath();
+          canvasContext.arc(snakesection.x+9.75, snakesection.y+10, 9.75, -ninetyDegrees, Math.PI-ninetyDegrees, false);
+          canvasContext.fill();
+          canvasContext.fillRect(snakesection.x+.25, snakesection.y+.25, 10.75,19.5)
+          break;
+        case "up":
+          canvasContext.beginPath();
+          canvasContext.arc(snakesection.x+10, snakesection.y+9.75, 9.75, 0, Math.PI, true);
+          canvasContext.fill();
+          canvasContext.fillRect(snakesection.x+.25, snakesection.y+8.75, 19.5,10.75)
+          break;
+        case "down":
+          canvasContext.beginPath();
+          canvasContext.arc(snakesection.x+10, snakesection.y+9.75, 9.75, 0, Math.PI, false);
+          canvasContext.fill();
+          canvasContext.fillRect(snakesection.x+.25, snakesection.y+.25, 19.5,10.75)
+          break;
+      }
+    } else {
+      canvasContext.fillRect(snakesection.x, snakesection.y, 19.5, 19.5)
+    };
+    counter+=1
+  });
 };
 
 function changeDirection(event) 
@@ -144,16 +179,16 @@ function changeDirection(event)
 
   switch (true) {
     case (pressKey == leftArrow && velocityX!=20):
-      velocityX = -20; velocityY = 0; break;
+      velocityX = -20; velocityY = 0; travelDirection="left"; break;
       
     case (pressKey == upArrow && velocityY!=20):
-      velocityX = 0; velocityY = -20; break;
+      velocityX = 0; velocityY = -20; travelDirection="up"; break;
       
     case (pressKey == rightArrow && velocityX!=-20):
-      velocityX = 20; velocityY = 0; break;
+      velocityX = 20; velocityY = 0; travelDirection="right"; break;
       
     case (pressKey == downArrow && velocityY!=-20):
-      velocityX = 0; velocityY = 20; break;
+      velocityX = 0; velocityY = 20; travelDirection="down"; break;
   }
 }
 
