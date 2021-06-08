@@ -1,6 +1,6 @@
 let canvas;
 let canvasContext;
-let snake = [{x:200, y:200}];
+let snake = [{x:20, y:200}];
 let appleX;
 let appleY;
 let appleIsEaten = false
@@ -39,7 +39,7 @@ function runGame() {
     drawApple();
     drawSnake();
     drawScore();
-  },500);
+  },150);
 }
 
 function drawCanvas() {
