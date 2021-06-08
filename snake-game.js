@@ -1,8 +1,6 @@
 let canvas;
 let canvasContext;
-let headX = 200;
-let headY = 200;
-let snake = [ {x:headX, y:headY}];
+let snake = [{x:200, y:200}];
 let appleX;
 let appleY;
 let appleIsEaten = false
@@ -12,6 +10,7 @@ let travelDirection="right";
 let hasCollided=false;
 let gameStart = "off";
 let gameTic;
+let gameScore = snake.length-1;
 
 
 window.onload = function() {
@@ -39,12 +38,19 @@ function runGame() {
     checkCollision();
     drawApple();
     drawSnake();
-  },1000);
+    drawScore();
+  },500);
 }
 
 function drawCanvas() {
   canvasContext.fillStyle='black';
   canvasContext.fillRect(0,0,canvas.width,canvas.height);
+};
+
+function drawScore() {
+  let gameScore = snake.length-1;
+  let scoreBoard = document.getElementById("scoreboard");
+  scoreBoard.innerHTML = "Score: " + gameScore
 };
 
 function moveSnake() {
@@ -65,7 +71,7 @@ function moveSnake() {
   snake.unshift(head);
   checkApple();
   if (appleIsEaten != true)
-  snake.pop();
+    snake.pop();
 };
 
 function checkCollision() {
@@ -192,7 +198,7 @@ function changeDirection(event)
 
   switch (true) {
     case (pressKey == leftArrow && velocityX!=20): travelDirection="left"; break;
-    
+
     case (pressKey == upArrow && velocityY!=20): travelDirection="up"; break;
       
     case (pressKey == rightArrow && velocityX!=-20): travelDirection="right"; break;

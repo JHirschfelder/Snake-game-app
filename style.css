@@ -1,5 +1,5 @@
 body {
-  background-color: gray;
+  background-color: rgb(100, 100, 100);
 }
 
 #game-canvas {
@@ -10,14 +10,30 @@ body {
     margin:auto;
 }
 
+#start-button {
+  position: absolute;
+    top: 460px;
+    left: 200;
+    right: 0;
+    margin:auto;
+}
+
+#scoreboard {
+  color: black;
+  position: absolute;
+    top: 460px;
+    left: 550;
+    margin:auto;
+}
+
 #game-over-popup {
   width: 500px;
   overflow: hidden;
-  background: rgba(4, 0, 255, 0.61);
+  background: rgba(4, 0, 255, 0.76);
   box-shadow: 0 0 10px black;
   border-radius: 10px;
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 10px;
